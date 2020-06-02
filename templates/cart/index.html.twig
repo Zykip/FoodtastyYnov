@@ -1,0 +1,109 @@
+{% extends 'partial/site.html.twig' %}
+{% block title %}Your Cart{% endblock %}
+{% block body %}
+    <div class="hero_in detail_page background-image" data-background="url(img/restaurant_detail_hero.jpg)"
+         style="background-image: url({{ asset('build/img/restaurant_detail_hero.jpg') }});">
+        <div class="wrapper opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)"
+             style="background-color: rgba(0, 0, 0, 0.5);">
+
+            <div class="container">
+                <div class="main_info">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-6">
+                            <h1>Your Cart</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container margin_detail" style="transform: none;">
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span>Your cart</span>
+            </h4>
+            <ul class="list-group mb-3">
+                {% set total = 0 %}
+                {% set delivery_fee = 0 %}
+                {% for cartItem in cart %}
+                    {% set total = total + (cartItem.quantity * cartItem.dish.price) %}
+                    {% set delivery_fee = delivery_fee +  (cartItem.quantity * 2.5) %}
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <button class="btn btn-danger remove-cart-item circle" data-id="{{ cartItem.id }}">&times;</button>
+                    <div>
+                        <h6 class="my-0">{{ cartItem.dish.name }}</h6>
+                        <small class="text-muted">x {{ cartItem.quantity }}</small>
+                    </div>
+                    <span class="text-muted">{{ cartItem.dish.price * cartItem.quantity }}</span>
+                </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Delivery Fee</span>
+                    <strong>{{ delivery_fee }}</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total</span>
+                    <strong>{{ total + delivery_fee }}</strong>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Billing address</h4>
+            <form class="js-form" action="{{ path('orders_add') }}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('place_order') }}">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" class="form-control" id="firstName" required name="firstname" value="{{ firstname }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" class="form-control" id="lastName" required name="lastname" value="{{ lastname }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% if app.user and is_granted('ROLE_CUSTOMER') %}
+                        <div class="col-md-6 mb-3">
+                            <label for="username">Logged in as</label>
+                            <input type="text" class="form-control" id="username" required name="username" disabled value="{{ username }}">
+                        </div>
+                    {% else %}
+                        <div class="col-md-6 mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" required name="username" >
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" required name="password">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ email }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" required name="address" value="{{ address }}">
+                </div>
+                <hr class="mb-4">
+                <h4 class="mb-3">Payment</h4>
+
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required checked>
+                        <label class="custom-control-label" for="paypal">Cash on delivery</label>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit" {{ cart|length == 0 ? 'disabled="disabled"' : '' }}>Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

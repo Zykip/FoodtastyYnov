@@ -1,0 +1,28 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block body %}
+    <h3>Add a review on this order</h3>
+
+    <form action="" method="post" class="js-form">
+        {% for dish in order.dishes %}
+            <h5>{{ dish.dish.name }}</h5>
+            <input type="hidden" name="dish_id[]" value="{{ dish.dishId }}">
+            <div class="rating-container mb-3">
+                <input type="radio" name="rating[{{ dish.dishId }}]" class="rating" value="1" />
+                <input type="radio" name="rating[{{ dish.dishId }}]" class="rating" value="2" />
+                <input type="radio" name="rating[{{ dish.dishId }}]" class="rating" value="3" />
+                <input type="radio" name="rating[{{ dish.dishId }}]" class="rating" value="4" />
+                <input type="radio" name="rating[{{ dish.dishId }}]" class="rating" value="5" />
+            </div>
+            <div class="form-group">
+                <textarea name="description[{{ dish.dishId }}]" class="form-control" placeholder="Comments"></textarea>
+            </div>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}
+
+{% block title %}
+    Add A Review
+{% endblock %}
+

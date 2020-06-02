@@ -1,0 +1,42 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block title %}Dishes index{% endblock %}
+
+{% block body %}
+    <h1 class="d-inline-block">Dishes index</h1>
+    <a href="{{ path('dishes_new') }}" class="btn btn-primary float-right">Create new</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>CreatedAt</th>
+                <th>IsActive</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dish in dishes %}
+            <tr>
+                <td>{{ dish.id }}</td>
+                <td><img src="{{ asset('upload/images/'~dish.media.name) }}" alt="{{ dish.media.name }}" height="100"></td>
+                <td>{{ dish.name }}</td>
+                <td>{{ dish.price }}</td>
+                <td>{{ dish.createdAt ? dish.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dish.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('dishes_edit', {'id': dish.id}) }}" class="btn btn-primary">edit</a>
+                    {{ include('dishes/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,17 @@
+<html lang="en">
+    <head>
+        <title>Order Email</title>
+    </head>
+<body>
+    <h1>Order# {{ order.id }}</h1>
+    <p>You have received new order from {{ order.customer.firstName }} {{ order.customer.name }}</p>
+    <p>Address: {{ order.customer.postalAddress }}</p>
+    <p>Delivery Time: {{ order.deliverAt.format('Y-m-d h:i A') }}</p>
+
+    <ul class="list-group">
+        {% for item in order.dishes %}
+            <li class="list-group-item">{{ item.dish.name }} &times; {{ item.quantity }} <span class="float-right">{{ item.dish.price }}</span></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

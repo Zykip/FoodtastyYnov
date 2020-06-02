@@ -1,0 +1,76 @@
+{% extends 'partial/site.html.twig' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+    <div class="hero_single version_2">
+        <div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)" style="background-color: rgba(0, 0, 0, 0.6);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-9 col-lg-10 col-md-8">
+                        <h1>Discover &amp; Order</h1>
+                        <p>The best restaurants at the best price</p>
+                        <form method="get" action="{{ path('search') }}">
+                            <div class="row no-gutters custom-search-input">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <input class="form-control" name="item" type="text" placeholder="What are you looking for..." value="{{ app.request.query.get('item') }}">
+                                        <i class="icon_search"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input class="form-control no_border_r" name="location" type="text" placeholder="Address, neighborhood..." value="{{ app.request.query.get('location') }}">
+                                        <i class="icon_pin_alt"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="submit" value="Search">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container margin_60_40">
+        <div class="main_title">
+            <span><em></em></span>
+            <h2>Popular Restaurants</h2>
+            <a href="#0">View All</a>
+        </div>
+
+        <div class="owl-carousel owl-theme carousel_4 owl-loaded owl-drag">
+            <div class="owl-stage-outer">
+                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2371px;">
+                    {% for restaurant in restaurants %}
+                        <div class="owl-item">
+                            <div class="item">
+                                <div class="strip">
+                                    <figure>
+                                        <img src="{{ asset('upload/images/'~restaurant.media.name) }}" data-src="{{ asset('upload/images/'~restaurant.media.name) }}" class="owl-lazy" alt="" style="opacity: 1;">
+                                        <a href="{{ path('restaurant', {id: restaurant.id})}}" class="strip_info">
+                                            <div class="item_title">
+                                                <h3>{{ restaurant.name }}</h3>
+                                                <small>{{ restaurant.address }}</small>
+                                            </div>
+                                        </a>
+                                    </figure>
+                                    <ul>
+                                        <li><span class="loc_open">Now Open</span></li>
+                                        <li></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="owl-nav">
+                <button type="button" role="presentation" class="owl-prev disabled"><i class="arrow_carrot-left"></i></button>
+                <button type="button" role="presentation" class="owl-next"><i class="arrow_carrot-right"></i></button>
+            </div>
+            <div class="owl-dots disabled"></div>
+        </div>
+    </div>
+{% endblock %}

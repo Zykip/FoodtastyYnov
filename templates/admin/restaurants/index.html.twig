@@ -1,0 +1,42 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block body %}
+    <h1 class="d-inline-block">Restaurants</h1>
+{#    <a href="{{ path('admin_restaurants_new') }}" class="btn btn-primary float-right">Create new</a>#}
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>IsActive</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ restaurant.id }}</td>
+                <td><img src="{{ asset('upload/images/'~restaurant.media.name) }}" alt="{{ restaurant.name }}" height="100"></td>
+                <td>{{ restaurant.name }}</td>
+                <td>{{ restaurant.address }}</td>
+                <td>{{ restaurant.email }}</td>
+                <td>{{ restaurant.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_restaurants_edit', {'id': restaurant.id}) }}" class="btn btn-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

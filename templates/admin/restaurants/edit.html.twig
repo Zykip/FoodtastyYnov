@@ -1,0 +1,10 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block title %}Edit Restaurants{% endblock %}
+
+{% block body %}
+    <h1 class="d-inline-block">Edit Restaurants</h1>
+    <a href="{{ path('admin_restaurants_index') }}" class="btn btn-primary float-right">back to list</a>
+
+    {{ include('admin/restaurants/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

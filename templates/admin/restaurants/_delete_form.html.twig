@@ -1,0 +1,5 @@
+<form method="post" class="d-inline-block js-form-delete" action="{{ path('admin_restaurants_delete', {'id': restaurant.id}) }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ restaurant.id) }}">
+    <button class="btn btn-danger">Delete</button>
+</form>

@@ -1,0 +1,11 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block title %}New Customers{% endblock %}
+
+{% block body %}
+    <h1 class="d-inline-block">Create new Customers</h1>
+    <a href="{{ path('admin_customers_index') }}" class="btn btn-primary float-right">back to list</a>
+
+    {{ include('customers/_form.html.twig') }}
+
+{% endblock %}

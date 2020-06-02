@@ -1,0 +1,11 @@
+{% extends 'partial/base.html.twig' %}
+
+{% block title %}Edit Dishes{% endblock %}
+
+{% block body %}
+    <h1 class="d-inline-block">Edit Dishes</h1>
+    <a href="{{ path('dishes_index') }}" class="btn btn-primary float-right">back to list</a>
+
+    {{ include('dishes/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

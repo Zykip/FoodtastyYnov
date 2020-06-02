@@ -1,0 +1,23 @@
+{% extends 'partial/base.html.twig' %}
+{% block title %}Order# {{ order.id }}{% endblock %}
+
+{% block body %}
+    <h3>Order# {{ order.id }}</h3>
+
+    <h5>Items</h5>
+    <ul class="list-group">
+        {% set total = 0 %}
+        {% set delivery_fee = 0 %}
+        {% for item in order.dishes %}
+            {% set total = total + (item.quantity * item.dish.price) %}
+            {% set delivery_fee = delivery_fee + (item.quantity * 2.5) %}
+            <li class="list-group-item">{{ item.dish.name }} &times; {{ item.quantity }} <span class="float-right">{{ item.dish.price }}</span></li>
+        {% endfor %}
+    </ul>
+    <ul class="list-group mt-3">
+        <li class="list-group-item">Delivery Fee <span class="float-right">{{ delivery_fee|number_format(2) }}</span></li>
+        <li class="list-group-item">Total <span class="float-right">{{ (total+delivery_fee)|number_format(2) }}</span></li>
+    </ul>
+{% endblock %}
+
+
