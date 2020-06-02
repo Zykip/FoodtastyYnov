@@ -13,5 +13,7 @@ Installer Composer : composer install
 et maintenant suivre ces commandes
 
 run php bin/console doctrine:database:create
+
 run php bin/console doctrine:migrations:migrate
+
 run php bin/console doctrine:fixtures:load
